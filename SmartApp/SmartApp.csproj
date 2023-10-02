@@ -14,12 +14,10 @@
   <ItemGroup>
     <Folder Include="Assets\Fonts\" />
     <Folder Include="Assets\Images\" />
-    <Folder Include="Controls\" />
     <Folder Include="MVVM\Cores\" />
     <Folder Include="MVVM\Models\" />
     <Folder Include="MVVM\Views\" />
     <Folder Include="MVVM\ViewModels\" />
-    <Folder Include="Services\" />
     <Folder Include="Resources\" />
   </ItemGroup>
 
