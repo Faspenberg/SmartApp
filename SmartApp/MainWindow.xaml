@@ -4,9 +4,26 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SmartApp"
+        xmlns:viewmodels="clr-namespace:SmartApp.MVVM.ViewModels"
+        xmlns:views="clr-namespace:SmartApp.MVVM.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized"
+        WindowStyle="None"
+        Title="Smart App" Height="800" Width="1280">
     <Grid>
+        <Image Source="Assets/Images/background.jpg" Stretch="Fill" />
+        <ContentControl Content="{Binding CurrentViewModel}">
 
+            <ContentControl.Resources>
+                <DataTemplate DataType="{x:Type viewmodels:HomeViewModel}">
+                    <views:HomeView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type viewmodels:SettingsViewModel}">
+                    <views:SettingsView />
+                </DataTemplate>
+            </ContentControl.Resources>
+
+        </ContentControl>
     </Grid>
 </Window>

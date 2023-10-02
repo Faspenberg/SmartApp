@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -18,13 +19,14 @@ namespace SmartApp
     public partial class App : Application
     {
 
-        private static IHost AppHost { get; set; }
+        private static IHost? AppHost { get; set; }
 
         public App()
         {
             AppHost = Host.CreateDefaultBuilder()
                 .ConfigureServices(services =>
                 {
+                    services.AddTransient<HttpClient> ();
                     services.AddSingleton<DateAndTimeService>();
                     services.AddSingleton<WeatherService>();
                     services.AddSingleton<DeviceService>();
