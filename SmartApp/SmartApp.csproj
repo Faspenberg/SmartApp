@@ -8,7 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
     <PackageReference Include="Microsoft.Azure.Devices" Version="1.39.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,7 +19,6 @@
     <Folder Include="MVVM\Cores\" />
     <Folder Include="MVVM\Models\" />
     <Folder Include="MVVM\Views\" />
-    <Folder Include="MVVM\ViewModels\" />
     <Folder Include="Resources\" />
   </ItemGroup>
 
