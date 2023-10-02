@@ -8,18 +8,58 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
-    <PackageReference Include="Microsoft.Azure.Devices" Version="1.39.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+    <None Remove="Assets\Fonts\fa-brands-400.ttf" />
+    <None Remove="Assets\Fonts\fa-brands-400.woff2" />
+    <None Remove="Assets\Fonts\fa-regular-400.ttf" />
+    <None Remove="Assets\Fonts\fa-regular-400.woff2" />
+    <None Remove="Assets\Fonts\fa-solid-900.ttf" />
+    <None Remove="Assets\Fonts\fa-solid-900.woff2" />
+    <None Remove="Assets\Fonts\fa-v4compatibility.ttf" />
+    <None Remove="Assets\Fonts\fa-v4compatibility.woff2" />
+    <None Remove="Assets\Images\background.jpg" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Assets\Fonts\" />
-    <Folder Include="Assets\Images\" />
+    <Content Include="Assets\Fonts\fa-brands-400.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Fonts\fa-brands-400.woff2">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Fonts\fa-regular-400.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Fonts\fa-regular-400.woff2">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Fonts\fa-solid-900.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Fonts\fa-solid-900.woff2">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Fonts\fa-v4compatibility.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Fonts\fa-v4compatibility.woff2">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Images\background.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
+    <PackageReference Include="Microsoft.Azure.Devices" Version="1.39.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="MVVM\Cores\" />
     <Folder Include="MVVM\Models\" />
     <Folder Include="MVVM\Views\" />
-    <Folder Include="Resources\" />
   </ItemGroup>
 
 </Project>
