@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using DataAccess.Services;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SmartApp.MVVM.ViewModels;
 using SmartApp.Services;
@@ -28,6 +29,7 @@ namespace SmartApp
                 {
                     services.AddTransient<HttpClient> ();
                     services.AddSingleton<DateAndTimeService>();
+                    services.AddSingleton<IotHubManager>();
                     services.AddSingleton<WeatherService>();
                     services.AddSingleton<DeviceService>();
                     services.AddSingleton<HomeViewModel>();

@@ -26,19 +26,19 @@
 
     <Style x:Key="SettingsButton" TargetType="Button" BasedOn="{StaticResource StandardButton}">
         <Setter Property="HorizontalAlignment" Value="Right" />
-        <Setter Property="FontFamily" Value="{StaticResource FontAwesome-Regular}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontAwesome-Solid}" />
         <Setter Property="FontSize" Value="42" />
         <Setter Property="Content" Value="&#xf1de;" />
     </Style>
 
     <Style x:Key="CancelButton" TargetType="Button" BasedOn="{StaticResource StandardButton}">
-        <Setter Property="FontFamily" Value="{StaticResource FontAwesome-Regular}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontAwesome-Solid}" />
         <Setter Property="FontSize" Value="42" />
         <Setter Property="Content" Value="&#xf00d;" />
     </Style>
 
     <Style x:Key="MenuButton" TargetType="Button" BasedOn="{StaticResource StandardButton}">
-        <Setter Property="FontFamily" Value="{StaticResource FontAwesome-Regular}" />
+        <Setter Property="FontFamily" Value="{StaticResource FontAwesome-Solid}" />
         <Setter Property="FontSize" Value="28" />
         <Setter Property="Margin" Value="20 10 20 20" />
     </Style>

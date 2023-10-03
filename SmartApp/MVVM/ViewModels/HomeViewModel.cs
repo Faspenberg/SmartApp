@@ -1,10 +1,12 @@
 ﻿
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DataAccess.Services;
 using Microsoft.Extensions.DependencyInjection;
 using SmartApp.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,17 +18,32 @@ namespace SmartApp.MVVM.ViewModels
         private readonly IServiceProvider _serviceProvider;
         private readonly DateAndTimeService _dateAndTimeService;
         private readonly WeatherService _weatherService;
+        private readonly IotHubManager _ioutHubManager;
 
-        public HomeViewModel(IServiceProvider serviceProvider, DateAndTimeService dateAndTimeService, WeatherService weatherService)
+        public HomeViewModel(IServiceProvider serviceProvider, DateAndTimeService dateAndTimeService, WeatherService weatherService, IotHubManager ioutHubManager)
         {
             _serviceProvider = serviceProvider;
             _dateAndTimeService = dateAndTimeService;
             _weatherService = weatherService;
+            _ioutHubManager = ioutHubManager;
+
+           
+
+            _ioutHubManager.DeviceListUpdated += UpdateDeviceList;
 
             UpdateDateAndTime();
             UpdateWeather();
+            UpdateDeviceList();
+            
         }
 
+        private void UpdateDeviceList()
+        {
+            DevicesList = new ObservableCollection<DeviceItemVewModel>(_ioutHubManager.DeviceList.Select(device => new DeviceItemVewModel(device)));
+        }
+
+        [ObservableProperty]
+        ObservableCollection<DeviceItemVewModel> devicesList;
 
         [ObservableProperty]
         private string? _title = "Home";
@@ -38,7 +55,7 @@ namespace SmartApp.MVVM.ViewModels
         private string? _currentDate;
 
         [ObservableProperty]
-        private string? _currentWeatherCondition = "\ue137";
+        private string? _currentWeatherCondition = "\uf5c7";
 
         [ObservableProperty]
         private string? _currentOutsideTemperature = "--";
