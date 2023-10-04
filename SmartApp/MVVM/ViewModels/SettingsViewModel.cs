@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DataAccess.Services;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -13,10 +14,12 @@ namespace SmartApp.MVVM.ViewModels
     {
 
         private readonly IServiceProvider _serviceProvider;
+        private readonly IotHubManager _iotHubManager;
 
-        public SettingsViewModel(IServiceProvider serviceProvider)
+        public SettingsViewModel(IServiceProvider serviceProvider, IotHubManager iotHubManager)
         {
             _serviceProvider = serviceProvider;
+            _iotHubManager = iotHubManager;
         }
 
         [ObservableProperty]
@@ -39,6 +42,7 @@ namespace SmartApp.MVVM.ViewModels
 
         private void ShowAddDevice() 
         {
+
         }
 
         [RelayCommand]

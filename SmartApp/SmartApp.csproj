@@ -57,7 +57,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="MVVM\Cores\" />
     <Folder Include="MVVM\Models\" />
   </ItemGroup>
 

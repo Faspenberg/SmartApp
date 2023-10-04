@@ -15,6 +15,7 @@ namespace DataAccess.Services
 {
     public class IotHubManager
     {
+        private string _connectionString = string.Empty;
         private System.Timers.Timer _timer;
         private bool isConfigured;
         private readonly ZeniAppDbContext _dbContext;
@@ -32,26 +33,35 @@ namespace DataAccess.Services
 
         public List<DeviceItem> DeviceList { get; private set; }
         public event Action? DeviceListUpdated;
-        public async Task InitializeAsync()
+        public async Task Initialize(string connectionString = null!)
         {
             try
             {
+
+                _connectionString = connectionString;
+
                 if (!isConfigured)
                 {
-                    await Task.Delay(1000);
-                    var connectionString = "HostName=kyh-smartUnit-iotUppgift.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=7ML/rHjdnkMKOoZcQ3OoyDufPOxkx453+AIoTOFv98Y=";
-                    var settings = await _dbContext.Settings.FirstOrDefaultAsync();
-                    if (settings != null)
+                    if (!string.IsNullOrEmpty(_connectionString))
+                    {
+                        var settings = await _dbContext.Settings.FirstOrDefaultAsync();
+                        if (settings != null)
+                        {
+                            _registryManager = RegistryManager.CreateFromConnectionString(connectionString);
+                            _serviceClient = ServiceClient.CreateFromConnectionString(connectionString);
+                            isConfigured = true;
+                        }
+                    }
+                    else
                     {
                         _registryManager = RegistryManager.CreateFromConnectionString(connectionString);
                         _serviceClient = ServiceClient.CreateFromConnectionString(connectionString);
-                        isConfigured = true;  
+                        isConfigured = true;
                     }
                 }
-               
-                isConfigured = true;
+
             }
-            catch (Exception ex ) { Debug.Write(ex.Message); }
+            catch (Exception ex) { Debug.Write(ex.Message); }
         }
 
         private async Task GetAllDevicesAsync()
@@ -78,7 +88,7 @@ namespace DataAccess.Services
                             listUpdated = true;
                         }
 
-                        for(int i = DeviceList.Count; i > 0; i--)
+                        for (int i = DeviceList.Count; i > 0; i--)
                         {
                             if (!twins.Any(x => x.DeviceId == DeviceList[i].DeviceId))
                             {
@@ -96,7 +106,10 @@ namespace DataAccess.Services
 
 
             }
-            catch (Exception ex ) { Debug.WriteLine(ex.Message); }
+            catch (Exception ex) { Debug.WriteLine(ex.Message); }
         }
+
+
+      
     }
 }

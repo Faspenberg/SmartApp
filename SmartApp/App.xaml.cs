@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
+
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows;
@@ -28,14 +29,14 @@ namespace SmartApp
                 .ConfigureServices(services =>
                 {
                     services.AddTransient<HttpClient> ();
-                    services.AddSingleton<DateAndTimeService>();
-                    services.AddSingleton<IotHubManager>();
+                    services.AddSingleton<DateAndTimeService>();                    
                     services.AddSingleton<WeatherService>();
                     services.AddSingleton<DeviceService>();
                     services.AddSingleton<HomeViewModel>();
                     services.AddSingleton<SettingsViewModel>();
                     services.AddSingleton<MainWindowViewModel>();
                     services.AddSingleton<MainWindow>();
+                   
 
                 })
                 .Build();

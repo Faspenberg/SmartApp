@@ -39,7 +39,7 @@ namespace SmartApp.MVVM.ViewModels
 
         private void UpdateDeviceList()
         {
-            DevicesList = new ObservableCollection<DeviceItemVewModel>(_ioutHubManager.DeviceList.Select(device => new DeviceItemVewModel(device)));
+            DevicesList = new ObservableCollection<DeviceItemVewModel>(_ioutHubManager.DeviceList.Select(device => new DeviceItemVewModel(device)).ToList());
         }
 
         [ObservableProperty]
