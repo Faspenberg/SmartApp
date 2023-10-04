@@ -5,7 +5,7 @@ using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Device.Fan.Services
+namespace Shared.Services
 {
     public class NetworkManager
     {
@@ -23,7 +23,7 @@ namespace Device.Fan.Services
                 var reply = await ping.SendPingAsync(ipAdress, 1000, new byte[32], new());
                 return reply.Status == IPStatus.Success;
             }
-            catch
+            catch (Exception ex) 
             {
                 return false;
             }

@@ -1,5 +1,4 @@
-﻿using Device.Fan.Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +13,9 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Shared.Services;
+
+
 namespace Device.Fan
 {
     /// <summary>
@@ -41,7 +43,7 @@ namespace Device.Fan
 
             while (true)
             {
-                if (_deviceManager.AllowSending)
+                if (_deviceManager.AllowSending())
                     fan.Begin();
                 else
                     fan.Stop();

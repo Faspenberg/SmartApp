@@ -60,8 +60,4 @@
     <Folder Include="MVVM\Models\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
-  </ItemGroup>
-
 </Project>
