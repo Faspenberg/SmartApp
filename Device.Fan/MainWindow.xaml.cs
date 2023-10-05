@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Shared.Services;
+using Shared.Models.DataDeviceModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,29 +16,21 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Shared.Services;
 
 
 namespace Device.Fan
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         private readonly DeviceManager _deviceManager;
-        private readonly NetworkManager _networkManager;
-
-        public MainWindow(DeviceManager deviceManager, NetworkManager networkManager)
+        public MainWindow(DeviceManager deviceManager)
         {
+            _deviceManager = deviceManager;
             InitializeComponent();
 
-            _deviceManager = deviceManager;
-            _networkManager = networkManager;
+            Task.WhenAll(SetDeviceTypeAsync(), ToggleFanStateAsync(), CheckConnectivityAsync(), SendTelemetryDataAsync());
 
-            Task.WhenAll(ToggleFanStateAsync(), CheckConnectivityAsync());
         }
-
 
         private async Task ToggleFanStateAsync()
         {
@@ -43,6 +38,7 @@ namespace Device.Fan
 
             while (true)
             {
+
                 if (_deviceManager.AllowSending())
                     fan.Begin();
                 else
@@ -56,9 +52,54 @@ namespace Device.Fan
         {
             while (true)
             {
-                ConnectivityStatus.Text = await _networkManager.CheckConnectivityAsync();
+                ConnectivityStatus.Text = await NetworkManager.CheckConnectivityAsync();
                 await Task.Delay(1000);
             }
+        }
+
+
+        private async Task SetDeviceTypeAsync()
+        {
+            var deviceType = "Fan";
+
+            await _deviceManager.SendDeviceTypeAsync(deviceType);
+        }
+
+        private async Task SendTelemetryDataAsync()
+        {
+
+            while (true)
+            {
+                if (_deviceManager.Configuration.AllowSending)
+                {
+                    var dataModel = new FanDataModel()
+                    {
+                        IsActive = true,
+                        CurrentTime = DateTime.Now
+                    };
+
+
+                    var latestMessageJson = JsonConvert.SerializeObject(new
+                    {
+                        
+                        currentTime = dataModel.CurrentTime,
+                        DeviceOn = dataModel.IsActive,
+                        ContainerName = dataModel.ContainerName,
+                    });
+
+
+                    var operationalStatusJson = JsonConvert.SerializeObject(dataModel.IsActive);
+
+
+                    if (await _deviceManager.SendMessageAsync(latestMessageJson) && await _deviceManager.SendOperationalStatusAsync(operationalStatusJson))
+                        CurrentMessageSent.Text = $"Message sent successfully: {latestMessageJson} DeviceOn: {operationalStatusJson}";
+
+                    var telemetryInterval = _deviceManager.Configuration.TelemetryInterval;
+
+                    await Task.Delay(telemetryInterval);
+                }
+            }
+
         }
     }
 }

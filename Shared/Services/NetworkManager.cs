@@ -9,24 +9,29 @@ namespace Shared.Services
 {
     public class NetworkManager
     {
-        public virtual async Task<string> CheckConnectivityAsync(string ipAdress = "8.8.8.8") 
+        private static readonly Ping ping = new();
+        private static bool isConnected = false;
+        private static int heartbeatInterval = 1000;
+
+
+        public static async Task<string> CheckConnectivityAsync(string ipaddress = "8.8.8.8")
         {
-            var isConnected = await SendPingAsync(ipAdress);
+
+            isConnected = await SendPingAsync(ipaddress);
+            Console.WriteLine(isConnected ? "Connected" : "Disconnected");
             return isConnected ? "Connected" : "Disconnected";
         }
 
-        private async Task<bool> SendPingAsync(string ipAdress)
+        private static async Task<bool> SendPingAsync(string ipAddress)
         {
             try
             {
-                using var ping = new Ping();
-                var reply = await ping.SendPingAsync(ipAdress, 1000, new byte[32], new());
+                var reply = await ping.SendPingAsync(ipAddress, 1000, new byte[32], new());
                 return reply.Status == IPStatus.Success;
+
             }
-            catch (Exception ex) 
-            {
-                return false;
-            }
+            catch (Exception ex) { return false; }
         }
+
     }
 }
