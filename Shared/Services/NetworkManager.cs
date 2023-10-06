@@ -11,7 +11,7 @@ namespace Shared.Services
     {
         private static readonly Ping ping = new();
         private static bool isConnected = false;
-        private static int heartbeatInterval = 1000;
+        
 
 
         public static async Task<string> CheckConnectivityAsync(string ipaddress = "8.8.8.8")

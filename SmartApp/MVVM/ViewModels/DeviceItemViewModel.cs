@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using DataAccess.Models;
+using Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace SmartApp.MVVM.ViewModels
 {
-    public partial class DeviceItemVewModel : ObservableObject
+    public partial class DeviceItemViewModel : ObservableObject
     {
 
         private DeviceItem _deviceItem;
 
-        public DeviceItemVewModel(DeviceItem deviceItem)
+        public DeviceItemViewModel(DeviceItem deviceItem)
         {
             _deviceItem = deviceItem;
             Location = deviceItem.Location ?? "";
@@ -22,19 +22,28 @@ namespace SmartApp.MVVM.ViewModels
 
         }
 
-        public string DeviceId => _deviceItem.DeviceId;
+        public string DeviceId => _deviceItem.DeviceId = null!;
 
-        public string DeviceType => _deviceItem.DeviceType;
+        public string? DeviceType => _deviceItem.DeviceType;
 
-        public string Vendor => _deviceItem.Vendor;
+        public string? Vendor => _deviceItem.Vendor;
 
         private string SetDeviceIcon()
         {
-            return DeviceType.ToLower() switch
+            switch (DeviceType?.ToLower())
             {
-                "light" => "\uf0eb",
-                _ => "\uf2db",
-            };
+                case "lamp":
+                    return "\uf0eb";
+
+                case "fan":
+                    return "\ue004";
+
+                case "printer":
+                    return "\uf02f";
+
+                default:
+                    return "\uf2db";
+            }
         }
 
         [ObservableProperty]

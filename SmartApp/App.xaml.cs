@@ -1,14 +1,15 @@
-﻿using DataAccess.Services;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Shared.Models;
+using Shared.Services;
 using SmartApp.MVVM.ViewModels;
-using SmartApp.Services;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.IO;
 using System.Linq;
-
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows;
@@ -26,17 +27,30 @@ namespace SmartApp
         public App()
         {
             AppHost = Host.CreateDefaultBuilder()
-                .ConfigureServices(services =>
+                .ConfigureAppConfiguration((config) =>
                 {
-                    services.AddTransient<HttpClient> ();
-                    services.AddSingleton<DateAndTimeService>();                    
+                    config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+                })
+                .ConfigureServices((config, services) =>
+                {
+                    services.AddSingleton (new IotHubManager(new IotHubManagerOptions
+                    {
+                        IotHubConnectionString = config.Configuration.GetConnectionString("IotHub")!,
+                        EventHubEndpoint = config.Configuration.GetConnectionString("EventHubEndpoint")!,
+                        EventHubName = config.Configuration.GetConnectionString("EventHubName")!,
+                        ConsumerGroup = config.Configuration.GetConnectionString("ConsumerGroup")!
+                    }));
+
+                    services.AddTransient<HttpClient>();
+                    services.AddSingleton<DateAndTimeService>();
                     services.AddSingleton<WeatherService>();
-                    services.AddSingleton<DeviceService>();
                     services.AddSingleton<HomeViewModel>();
                     services.AddSingleton<SettingsViewModel>();
+                    services.AddSingleton<AddDeviceViewModel>();
+                    services.AddSingleton<AllDevicesViewModel>();
                     services.AddSingleton<MainWindowViewModel>();
                     services.AddSingleton<MainWindow>();
-                   
+
 
                 })
                 .Build();
@@ -47,9 +61,9 @@ namespace SmartApp
             await AppHost!.StartAsync();
 
             var mainWindow = AppHost!.Services.GetRequiredService<MainWindow>();
-            mainWindow.Show();  
+            mainWindow.Show();
 
             base.OnStartup(e);
-        } 
+        }
     }
 }

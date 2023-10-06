@@ -1,6 +1,7 @@
 using System;
 using System.Text;
 using Azure.Messaging.EventHubs;
+using AzureFunctions.Contexts;
 using AzureFunctions.Models;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Functions.Worker;
@@ -11,16 +12,13 @@ namespace AzureFunctions.Methods
 {
     public class SaveToCosmosDb
     {
-        private readonly ILogger<SaveToCosmosDb> _logger;
+        private readonly CosmosContext _context;
+
         private readonly CosmosClient _cosmosclient;
         private readonly Container _container;
-        public SaveToCosmosDb(ILogger<SaveToCosmosDb> logger)
+        public SaveToCosmosDb(CosmosContext context)
         {
-            _logger = logger;
-
-            _cosmosclient = new CosmosClient("AccountEndpoint=https://kyh-smartunitcosmosdb.documents.azure.com:443/;AccountKey=ImCYA5pgXRqg6qSGDu7bkaOn3HRrrlp6nfeyyzDfYizs45y6Esi19ZSbYqGETqXWrnLIiswGjaRHACDbWY58pw==;");
-            var database = _cosmosclient.GetDatabase("kyh");
-            _container = database.GetContainer("Messages");
+            _context = context;
         }
 
         [Function(nameof(SaveToCosmosDb))]
@@ -28,18 +26,17 @@ namespace AzureFunctions.Methods
         {
             foreach (EventData @event in events)
             {
+                var deviceMessage = new Models.DeviceItemMessage
+                {
+                    DeviceId = @event.SystemProperties["iothub-connection-device-id"].ToString(),
+                    Payload = Encoding.UTF8.GetString(@event.Body.ToArray())
 
-                try
-                {
-                    var json = Encoding.UTF8.GetString(@event.EventBody.ToArray());
-                    var data = JsonConvert.DeserializeObject<DataMessage>(json);
-                    await _container.CreateItemAsync<DataMessage>(data, new PartitionKey(data.id));
-                    _logger.LogInformation($"Message saved: {data}");
-                }
-                catch
-                {
-                    _logger.LogInformation("Failed to save!");
-                }
+                };
+                _context.Messages.Add(deviceMessage);
+
+                await _context.SaveChangesAsync();
+
+
             }
         }
     }

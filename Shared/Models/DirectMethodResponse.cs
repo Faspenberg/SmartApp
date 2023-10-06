@@ -8,9 +8,13 @@ namespace Shared.Models
 {
     public class DirectMethodResponse
     {
+        public string DeviceId { get; set; } = null!;
+
+        public string MethodName { get; set; } = null!;
+
 
         public string? Message { get; set; }
 
-        public string? Payload { get; set; }
+        public object? Payload { get; set; }
     }
 }

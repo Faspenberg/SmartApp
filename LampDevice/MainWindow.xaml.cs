@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Shared.Services;
-using Shared.Models.DataDeviceModels;
+using Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,33 +16,41 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Shared.Models.DataDeviceModels;
 
-
-namespace Device.Fan
+namespace LampDevice
 {
     public partial class MainWindow : Window
     {
         private readonly DeviceManager _deviceManager;
+
+
+
         public MainWindow(DeviceManager deviceManager)
         {
-            _deviceManager = deviceManager;
             InitializeComponent();
-
-            Task.WhenAll(SetDeviceTypeAsync(), ToggleFanStateAsync(), CheckConnectivityAsync());
-
+            _deviceManager = deviceManager;
+            Task.WhenAll(SetDeviceTypeAsync(), SendTelemetryDataAsync(), CheckConnectivityAsync(), ToggleLampStateAsync());
         }
 
-        private async Task ToggleFanStateAsync()
+
+        private async Task ToggleLampStateAsync()
         {
-            Storyboard fan = (Storyboard)this.FindResource("FanStoryboard");
 
             while (true)
             {
 
                 if (_deviceManager.AllowSending())
-                    fan.Begin();
+                {
+                    LampOnIcon.Visibility = Visibility.Visible;
+                    LampOffIcon.Visibility = Visibility.Collapsed;
+                }
                 else
-                    fan.Stop();
+                {
+                    LampOnIcon.Visibility = Visibility.Collapsed;
+                    LampOffIcon.Visibility = Visibility.Visible;
+
+                }
 
                 await Task.Delay(1000);
             }
@@ -54,16 +62,19 @@ namespace Device.Fan
             {
                 ConnectivityStatus.Text = await NetworkManager.CheckConnectivityAsync();
                 await Task.Delay(1000);
+
             }
         }
 
-
         private async Task SetDeviceTypeAsync()
         {
-            var deviceType = "Fan";
+            var deviceType = "Lamp";
 
             await _deviceManager.SendDeviceTypeAsync(deviceType);
         }
+
+
+
 
         private async Task SendTelemetryDataAsync()
         {
@@ -72,7 +83,7 @@ namespace Device.Fan
             {
                 if (_deviceManager.Configuration.AllowSending)
                 {
-                    var dataModel = new FanDataModel()
+                    var dataModel = new LampDataModel()
                     {
                         IsActive = true,
                         CurrentTime = DateTime.Now
@@ -81,8 +92,7 @@ namespace Device.Fan
 
                     var latestMessageJson = JsonConvert.SerializeObject(new
                     {
-
-                        currentTime = dataModel.CurrentTime,
+                        CurrentTime = dataModel.CurrentTime,
                         DeviceOn = dataModel.IsActive,
                         ContainerName = dataModel.ContainerName,
                     });
@@ -91,8 +101,11 @@ namespace Device.Fan
                     var operationalStatusJson = JsonConvert.SerializeObject(dataModel.IsActive);
 
 
-                    if (await _deviceManager.SendMessageAsync(latestMessageJson) && await _deviceManager.SendOperationalStatusAsync(operationalStatusJson))
-                        CurrentMessageSent.Text = $"Message sent successfully: {latestMessageJson} DeviceOn: {operationalStatusJson}";
+                    if (await _deviceManager.SendMessageAsync(latestMessageJson) &&
+                        await _deviceManager.SendOperationalStatusAsync(operationalStatusJson))
+                        CurrentMessageSent.Text =
+                            $"Message sent successfully: {latestMessageJson} DeviceOn: {operationalStatusJson}";
+
 
                     var telemetryInterval = _deviceManager.Configuration.TelemetryInterval;
 
@@ -101,6 +114,6 @@ namespace Device.Fan
             }
 
         }
+
     }
 }
-

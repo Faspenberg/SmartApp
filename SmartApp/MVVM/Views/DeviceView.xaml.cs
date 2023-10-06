@@ -1,5 +1,4 @@
-﻿using SmartApp.MVVM.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,23 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SmartApp
+namespace SmartApp.MVVM.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for DeviceView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class DeviceView : UserControl
     {
-        public MainWindow(MainWindowViewModel mainWindowViewModel)
+        public DeviceView()
         {
             InitializeComponent();
-            DataContext = mainWindowViewModel;
-        }
-
-        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left)
-                this.DragMove();
         }
     }
 }

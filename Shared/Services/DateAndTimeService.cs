@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 
-namespace SmartApp.Services
+namespace Shared.Services
 {
     public class DateAndTimeService
     {
 
-        private readonly Timer _timer;
+        private readonly System.Timers.Timer _timer;
         public event Action? TimeUpdated;
 
         public string? CurrentDate { get; private set; }
@@ -20,7 +20,7 @@ namespace SmartApp.Services
         {
             SetCurrentDateAndTime();
 
-            _timer = new Timer(1000);
+            _timer = new System.Timers.Timer(1000);
             _timer.Elapsed += (s, e) => SetCurrentDateAndTime();
             _timer.Start();
         }

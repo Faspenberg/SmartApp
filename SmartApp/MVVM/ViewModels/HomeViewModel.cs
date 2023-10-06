@@ -1,9 +1,8 @@
-﻿
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using DataAccess.Services;
 using Microsoft.Extensions.DependencyInjection;
-using SmartApp.Services;
+using Shared.Services;
+
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -29,7 +28,7 @@ namespace SmartApp.MVVM.ViewModels
 
            
 
-            _ioutHubManager.DeviceListUpdated += UpdateDeviceList;
+            _ioutHubManager.DevicesUpdated += UpdateDeviceList;
 
             UpdateDateAndTime();
             UpdateWeather();
@@ -39,11 +38,11 @@ namespace SmartApp.MVVM.ViewModels
 
         private void UpdateDeviceList()
         {
-            DevicesList = new ObservableCollection<DeviceItemVewModel>(_ioutHubManager.DeviceList.Select(device => new DeviceItemVewModel(device)).ToList());
+            DevicesList = new ObservableCollection<DeviceItemViewModel>(_ioutHubManager.CurrentDevices.Select(device => new DeviceItemViewModel(device)).ToList());
         }
 
         [ObservableProperty]
-        ObservableCollection<DeviceItemVewModel> devicesList;
+        ObservableCollection<DeviceItemViewModel> devicesList;
 
         [ObservableProperty]
         private string? _title = "Home";

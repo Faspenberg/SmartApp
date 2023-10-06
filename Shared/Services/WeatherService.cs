@@ -8,13 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 
-namespace SmartApp.Services
+namespace Shared.Services
 {
     public class WeatherService
     {
         private readonly string _outsideUrl = "https://api.openweathermap.org/data/2.5/weather?lat=59.1875&lon=18.1232&appid=b4a3119e986341f8f3a4d159c5787679";
         private readonly string _insideUrl = "http://localhost:7054/api/GetLatestInsideTemperature";
-        private readonly Timer _timer;
+        private readonly System.Timers.Timer _timer;
         private readonly HttpClient _http;
 
         public string? CurrentWeatherCondition { get; private set; }
@@ -28,7 +28,7 @@ namespace SmartApp.Services
             _http = http;
             Task.Run(SetCurrentWeatherAsync);
 
-            _timer = new Timer(1000);
+            _timer = new System.Timers.Timer(1000);
             _timer.Elapsed += async (s, e) => await SetCurrentWeatherAsync();
             _timer.Start();
         }

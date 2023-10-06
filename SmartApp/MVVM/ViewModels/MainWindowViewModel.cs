@@ -5,46 +5,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DataAccess.Services;
-using DataAccess.Contexts;
-using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace SmartApp.MVVM.ViewModels
 {
     public partial class MainWindowViewModel : ObservableObject
     {
-        private readonly ZeniAppDbContext _context;
-        private readonly IotHubManager _iotHubManager;
+        private readonly IServiceProvider _serviceProvider;
 
-        public MainWindowViewModel(ZeniAppDbContext context, IotHubManager iotHubManager)
+        public MainWindowViewModel(IServiceProvider serviceProvider)
         {
-            _context = context;
-            _iotHubManager = iotHubManager;
-            CheckConfigurationAsync().ConfigureAwait(false);
-
+            _serviceProvider = serviceProvider;
+            CurrentViewModel = _serviceProvider.GetRequiredService<HomeViewModel>();
         }
 
 
-        private async Task CheckConfigurationAsync()
-        {
-            try
-            {
-                if (await _context.Settings.AnyAsync())
-                {
-                    await _iotHubManager.Initialize();
-                   
-                }
-
-            }
-            catch (Exception ex) { Debug.WriteLine(ex.Message); }
-        }
         [ObservableProperty]
-
         private ObservableObject? _currentViewModel;
-
-
-
 
     }
 }
+
