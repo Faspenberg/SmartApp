@@ -13,14 +13,12 @@ namespace SmartApp.MVVM.ViewModels
     public partial class SettingsViewModel : ObservableObject
     {
         private readonly IServiceProvider _serviceProvider;
-        private readonly DateAndTimeService _dateTimeService;
         private readonly IotHubManager _iotHub;
 
 
-        public SettingsViewModel(IServiceProvider serviceProvider, DateAndTimeService dateTimeService, IotHubManager iotHub)
+        public SettingsViewModel(IServiceProvider serviceProvider, IotHubManager iotHub)
         {
-            _serviceProvider = serviceProvider;
-            _dateTimeService = dateTimeService;
+            _serviceProvider = serviceProvider;            
             _iotHub = iotHub;
         }
 
@@ -44,13 +42,13 @@ namespace SmartApp.MVVM.ViewModels
         private void ShowAllDevices()
         {
             var mainWindowViewModel = _serviceProvider.GetRequiredService<MainWindowViewModel>();
-            mainWindowViewModel.CurrentViewModel = _serviceProvider.GetRequiredService<AllDevicesViewModel>();
+            mainWindowViewModel.CurrentViewModel = _serviceProvider.GetRequiredService<DevicesViewModel>();
         }
 
         [RelayCommand]
         private void ShowConfiguration()
         {
-
+           
         }
 
         [RelayCommand]

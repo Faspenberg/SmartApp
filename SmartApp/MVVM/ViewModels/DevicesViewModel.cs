@@ -14,11 +14,11 @@ using Shared.Services;
 
 namespace SmartApp.MVVM.ViewModels
 {
-    public partial class AllDevicesViewModel : ObservableObject
+    public partial class DevicesViewModel : ObservableObject
     {
         private readonly IServiceProvider _serviceProvider;
         private readonly IotHubManager _iotHub;
-        public AllDevicesViewModel(IServiceProvider serviceProvider, IotHubManager iotHub)
+        public DevicesViewModel(IServiceProvider serviceProvider, IotHubManager iotHub)
         {
             _serviceProvider = serviceProvider;
             _iotHub = iotHub;
@@ -44,7 +44,7 @@ namespace SmartApp.MVVM.ViewModels
             {
                 if (parameter is DeviceItemViewModel device)
                 {
-                    // Call the RemoveDevice method in IotHubManager
+                    
                     await _iotHub.RemoveDevice(device.DeviceId);
                 }
             }

@@ -1,11 +1,14 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Azure.Devices;
 using Microsoft.Extensions.DependencyInjection;
+using Shared.Models;
 using Shared.Services;
 
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,12 +31,13 @@ namespace SmartApp.MVVM.ViewModels
 
            
 
-            _ioutHubManager.DevicesUpdated += UpdateDeviceList;
-
             UpdateDateAndTime();
             UpdateWeather();
             UpdateDeviceList();
-            
+
+
+            _ioutHubManager.DevicesUpdated += UpdateDeviceList;
+
         }
 
         private void UpdateDeviceList()
@@ -74,6 +78,8 @@ namespace SmartApp.MVVM.ViewModels
             var mainWindowViewModel = _serviceProvider.GetRequiredService<MainWindowViewModel>();
             mainWindowViewModel.CurrentViewModel = _serviceProvider.GetRequiredService<SettingsViewModel>();
         }
+
+        
         private void UpdateWeather()
         {
             _weatherService.WeatherUpdated += () =>
@@ -91,6 +97,50 @@ namespace SmartApp.MVVM.ViewModels
                 CurrentDate = _dateAndTimeService.CurrentDate;
                 CurrentTime = _dateAndTimeService.CurrentTime;
             };
+        }
+
+        [RelayCommand]
+        private async Task StartStopButton(object parameter)
+        {
+            try
+            {
+                if (parameter is DeviceItemViewModel device)
+                {
+                    if (device.IsActive)
+                    {
+                        var deviceId = device.DeviceId;
+
+                        // Stop the device
+                        if (!string.IsNullOrEmpty(deviceId))
+                        {
+                            await _ioutHubManager.SendMethodAsync(new DirectMethodResponse
+                            {
+                                DeviceId = deviceId,
+                                MethodName = "stop"
+                            });
+                        }
+                    }
+                    else
+                    {
+                        // Start the device
+                        var deviceId = device.DeviceId;
+                        if (!string.IsNullOrEmpty(deviceId))
+                        {
+                            await _ioutHubManager.SendMethodAsync(new DirectMethodResponse
+                            {
+                                DeviceId = deviceId,
+                                MethodName = "start"
+                            });
+
+
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
         }
     }
 }

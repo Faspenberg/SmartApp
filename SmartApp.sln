@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Device.Fan", "Device.Fan\De
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Shared\Shared.csproj", "{8EC064F2-A970-4418-8113-4A7394B5DA51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LampDevice", "LampDevice\LampDevice.csproj", "{18BC36EF-FB7F-4A4E-84A4-2442F444BC9F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LampDevice", "LampDevice\LampDevice.csproj", "{18BC36EF-FB7F-4A4E-84A4-2442F444BC9F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

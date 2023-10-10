@@ -24,8 +24,6 @@ namespace LampDevice
     {
         private readonly DeviceManager _deviceManager;
 
-
-
         public MainWindow(DeviceManager deviceManager)
         {
             InitializeComponent();
@@ -72,10 +70,6 @@ namespace LampDevice
 
             await _deviceManager.SendDeviceTypeAsync(deviceType);
         }
-
-
-
-
         private async Task SendTelemetryDataAsync()
         {
 
@@ -103,8 +97,7 @@ namespace LampDevice
 
                     if (await _deviceManager.SendMessageAsync(latestMessageJson) &&
                         await _deviceManager.SendOperationalStatusAsync(operationalStatusJson))
-                        CurrentMessageSent.Text =
-                            $"Message sent successfully: {latestMessageJson} DeviceOn: {operationalStatusJson}";
+                        CurrentMessageSent.Text = $"Message sent successfully: {latestMessageJson} DeviceOn: {operationalStatusJson}";
 
 
                     var telemetryInterval = _deviceManager.Configuration.TelemetryInterval;

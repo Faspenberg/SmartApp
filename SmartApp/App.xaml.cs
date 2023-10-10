@@ -47,7 +47,7 @@ namespace SmartApp
                     services.AddSingleton<HomeViewModel>();
                     services.AddSingleton<SettingsViewModel>();
                     services.AddSingleton<AddDeviceViewModel>();
-                    services.AddSingleton<AllDevicesViewModel>();
+                    services.AddSingleton<DevicesViewModel>();
                     services.AddSingleton<MainWindowViewModel>();
                     services.AddSingleton<MainWindow>();
 

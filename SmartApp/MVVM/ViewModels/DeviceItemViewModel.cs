@@ -38,8 +38,8 @@ namespace SmartApp.MVVM.ViewModels
                 case "fan":
                     return "\ue004";
 
-                case "printer":
-                    return "\uf02f";
+                case "speaker":
+                    return "\uf6a9";
 
                 default:
                     return "\uf2db";
