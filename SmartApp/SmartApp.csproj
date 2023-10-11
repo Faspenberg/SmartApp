@@ -18,6 +18,7 @@
     <None Remove="Assets\Fonts\fa-v4compatibility.ttf" />
     <None Remove="Assets\Fonts\fa-v4compatibility.woff2" />
     <None Remove="Assets\Images\background.jpg" />
+    <None Remove="Assets\Images\Livingroom.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -49,6 +50,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Images\background.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Images\Livingroom.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

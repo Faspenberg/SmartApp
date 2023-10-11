@@ -33,7 +33,7 @@ namespace SmartApp
                 })
                 .ConfigureServices((config, services) =>
                 {
-                    services.AddSingleton (new IotHubManager(new IotHubManagerOptions
+                    services.AddSingleton(new IotHubManager(new IotHubManagerOptions
                     {
                         IotHubConnectionString = config.Configuration.GetConnectionString("IotHub")!,
                         EventHubEndpoint = config.Configuration.GetConnectionString("EventHubEndpoint")!,
@@ -50,8 +50,6 @@ namespace SmartApp
                     services.AddSingleton<DevicesViewModel>();
                     services.AddSingleton<MainWindowViewModel>();
                     services.AddSingleton<MainWindow>();
-
-
                 })
                 .Build();
         }
@@ -62,6 +60,7 @@ namespace SmartApp
 
             var mainWindow = AppHost!.Services.GetRequiredService<MainWindow>();
             mainWindow.Show();
+            
 
             base.OnStartup(e);
         }

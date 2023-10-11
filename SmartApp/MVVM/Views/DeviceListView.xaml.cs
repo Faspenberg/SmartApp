@@ -1,5 +1,4 @@
-﻿using SmartApp.MVVM.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,21 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SmartApp
+namespace SmartApp.MVVM.Views
 {
-    
-    public partial class MainWindow : Window
+    /// <summary>
+    /// Interaction logic for DeviceListView.xaml
+    /// </summary>
+    public partial class DeviceListView : UserControl
     {
-        public MainWindow(MainWindowViewModel mainWindowViewModel)
+        public DeviceListView()
         {
             InitializeComponent();
-            DataContext = mainWindowViewModel;
-        }
-
-        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left)
-                this.DragMove();
         }
     }
 }

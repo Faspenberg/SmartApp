@@ -10,6 +10,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Shared.Services;
 using Shared.Models.Devices;
+using Newtonsoft.Json.Linq;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace LampDevice
 {
@@ -22,6 +25,14 @@ namespace LampDevice
 
         public App()
         {
+            InitializeApp().GetAwaiter().GetResult();
+        }
+
+
+        private async Task InitializeApp()
+        {
+            await DeviceRegistrationSetup();
+
             AppHost = Host.CreateDefaultBuilder()
                 .ConfigureAppConfiguration((context, config) =>
                 {
@@ -35,8 +46,52 @@ namespace LampDevice
                     services.AddSingleton<NetworkManager>();
                 })
                 .Build();
+        }
+
+
+        private async Task DeviceRegistrationSetup()
+        {
+
+            var connectionString = string.Empty;
+            try
+            {
+                var configurationBuilder = new ConfigurationBuilder()
+                    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                    .AddEnvironmentVariables();
+
+
+                var root = configurationBuilder.Build();
+                connectionString = root.GetConnectionString("LampDevice");
+            }
+            catch (Exception e) { }
+
+
+            if (string.IsNullOrEmpty(connectionString))
+            {
+                var newDeviceId = "lamp_device";
+                var deviceType = "Lamp";
+
+                var registrationManager = new RegistrationManager();
+                connectionString = await registrationManager.RegisterDevice(newDeviceId, deviceType);
+
+                var newConfig = new JObject(
+                    new JProperty("ConnectionStrings", new JObject(
+                        new JProperty("LampDevice", connectionString)
+                    ))
+                );
+
+
+                var appSettingsPath = "../../../appsettings.json";
+                File.WriteAllText(appSettingsPath, newConfig.ToString(Formatting.Indented));
+                File.WriteAllText("appsettings.json", newConfig.ToString(Formatting.Indented));
+
+
+            }
 
         }
+
+
+
 
         protected override async void OnStartup(StartupEventArgs e)
         {

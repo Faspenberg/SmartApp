@@ -1,10 +1,4 @@
-﻿using System.IO;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Newtonsoft.Json.Linq;
-using Shared.Models.Devices;
-using Shared.Services;
+﻿using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -12,9 +6,15 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Shared.Services;
+using Shared.Models.Devices;
+using Newtonsoft.Json.Linq;
+using System.IO;
 using Newtonsoft.Json;
 
-namespace Device.Fan
+namespace SpeakerDevice
 {
     public partial class App : Application
     {
@@ -25,8 +25,8 @@ namespace Device.Fan
         public App()
         {
             InitializeApp().GetAwaiter().GetResult();
-
         }
+
 
         private async Task InitializeApp()
         {
@@ -40,7 +40,7 @@ namespace Device.Fan
                 .ConfigureServices((config, services) =>
                 {
                     services.AddSingleton<MainWindow>();
-                    services.AddSingleton(new DeviceConfiguration(config.Configuration.GetConnectionString("FanDevice")!));
+                    services.AddSingleton(new DeviceConfiguration(config.Configuration.GetConnectionString("PrinterDevice")!));
                     services.AddTransient<DeviceManager>();
                     services.AddSingleton<NetworkManager>();
                 })
@@ -54,27 +54,27 @@ namespace Device.Fan
             try
             {
                 var configurationBuilder = new ConfigurationBuilder()
-                    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                    .AddEnvironmentVariables();
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddEnvironmentVariables();
 
 
                 var root = configurationBuilder.Build();
-                connectionString = root.GetConnectionString("FanDevice");
+                connectionString = root.GetConnectionString("SpeakerDevice");
             }
             catch (Exception e) { }
 
 
             if (string.IsNullOrEmpty(connectionString))
             {
-                var newDeviceId = "fan_device";
-                var deviceType = "Fan";
+                var newDeviceId = "SpeakerDevice";
+                var deviceType = "Speaker";
 
                 var registrationManager = new RegistrationManager();
                 connectionString = await registrationManager.RegisterDevice(newDeviceId, deviceType);
 
                 var newConfig = new JObject(
                     new JProperty("ConnectionStrings", new JObject(
-                        new JProperty("FanDevice", connectionString)
+                        new JProperty("SpeakerDevice", connectionString)
                     ))
                 );
 
@@ -88,11 +88,6 @@ namespace Device.Fan
 
         }
 
-
-
-
-
-
         protected override async void OnStartup(StartupEventArgs e)
         {
             await AppHost!.StartAsync();
@@ -102,5 +97,9 @@ namespace Device.Fan
 
             base.OnStartup(e);
         }
+
+
     }
+
 }
+

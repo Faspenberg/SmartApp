@@ -56,8 +56,7 @@ namespace SmartApp.MVVM.ViewModels
 
         private void UpdateDeviceList()
         {
-            Devices = new ObservableCollection<DeviceItemViewModel>(_iotHub.CurrentDevices
-                .Select(device => new DeviceItemViewModel(device)).ToList());
+            Devices = new ObservableCollection<DeviceItemViewModel>(_iotHub.CurrentDevices.Select(device => new DeviceItemViewModel(device)).ToList());
         }
 
     }

@@ -50,7 +50,7 @@ namespace Shared.Services
 
             try
             {
-                var sqlQuery = "select * from  devices";
+                var sqlQuery = "select * from devices";
 
 
                 var devicesTwin = await GetDevicesAsTwinAsync(sqlQuery);
@@ -184,7 +184,7 @@ namespace Shared.Services
             return null!;
         }
 
-
+        
         public async Task<bool> RegisterDevice(string deviceId, string deviceType, string location)
         {
 

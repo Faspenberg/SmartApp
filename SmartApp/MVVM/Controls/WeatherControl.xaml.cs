@@ -15,9 +15,7 @@ using System.Windows.Shapes;
 
 namespace SmartApp.MVVM.Controls
 {
-    /// <summary>
-    /// Interaction logic for WeatherControl.xaml
-    /// </summary>
+    
     public partial class WeatherControl : UserControl
     {
         public WeatherControl()

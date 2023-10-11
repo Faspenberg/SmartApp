@@ -12,7 +12,7 @@
         WindowStyle="None"
         Title="Smart App" Height="800" Width="1280">
     <Grid>
-        <Image Source="Assets/Images/background.jpg" Stretch="Fill" />
+        <Image Source="Assets/Images/Livingroom.jpg" Stretch="Fill" />
         <ContentControl Content="{Binding CurrentViewModel}">
 
             <ContentControl.Resources>
@@ -21,6 +21,13 @@
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type viewmodels:SettingsViewModel}">
                     <views:SettingsView />
+                </DataTemplate>
+
+                <DataTemplate DataType="{x:Type viewmodels:AddDeviceViewModel}">
+                    <views:DeviceView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type viewmodels:DevicesViewModel}">
+                    <views:DeviceListView />
                 </DataTemplate>
             </ContentControl.Resources>
 

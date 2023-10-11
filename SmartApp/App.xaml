@@ -12,10 +12,8 @@
                 <ResourceDictionary Source="./Resources/ButtonsDictionary.xaml" />
                 <ResourceDictionary Source="./Resources/WeatherSectionDictionary.xaml" />
                 <ResourceDictionary Source="./Resources/DateAndTimeSectionDictionary.xaml" />
+                <ResourceDictionary Source="./Resources/DeviceTileDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
-
-
-
         </ResourceDictionary>
     </Application.Resources>
 </Application>

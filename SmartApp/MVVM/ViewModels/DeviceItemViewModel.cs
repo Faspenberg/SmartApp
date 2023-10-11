@@ -16,19 +16,22 @@ namespace SmartApp.MVVM.ViewModels
         public DeviceItemViewModel(DeviceItem deviceItem)
         {
             _deviceItem = deviceItem;
-            Location = deviceItem.Location ?? "";
             IsActive = deviceItem.IsActive;
-            Icon = SetDeviceIcon();
-
+            Icon = SetIcon();
         }
 
-        public string DeviceId => _deviceItem.DeviceId = null!;
+        public string DeviceId => _deviceItem.DeviceId;
 
-        public string? DeviceType => _deviceItem.DeviceType;
+        public string DeviceType => _deviceItem.DeviceType;
 
-        public string? Vendor => _deviceItem.Vendor;
+        [ObservableProperty]
+        bool isActive;
 
-        private string SetDeviceIcon()
+        [ObservableProperty]
+        string icon;
+
+
+        private string SetIcon()
         {
             switch (DeviceType?.ToLower())
             {
@@ -36,7 +39,7 @@ namespace SmartApp.MVVM.ViewModels
                     return "\uf0eb";
 
                 case "fan":
-                    return "\ue004";
+                    return "\uf863";
 
                 case "speaker":
                     return "\uf6a9";
@@ -44,18 +47,7 @@ namespace SmartApp.MVVM.ViewModels
                 default:
                     return "\uf2db";
             }
+
         }
-
-        [ObservableProperty]
-
-        string location;
-
-        [ObservableProperty]
-
-        bool isActive;
-
-        [ObservableProperty]
-
-        string icon;
     }
 }

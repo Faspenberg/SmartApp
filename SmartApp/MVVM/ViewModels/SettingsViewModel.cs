@@ -39,7 +39,7 @@ namespace SmartApp.MVVM.ViewModels
         }
 
         [RelayCommand]
-        private void ShowAllDevices()
+        private void ShowDeviceList()
         {
             var mainWindowViewModel = _serviceProvider.GetRequiredService<MainWindowViewModel>();
             mainWindowViewModel.CurrentViewModel = _serviceProvider.GetRequiredService<DevicesViewModel>();
