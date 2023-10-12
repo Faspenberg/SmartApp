@@ -13,6 +13,8 @@ namespace Shared.Models.DataDeviceModels
         public bool IsActive { get; set; }
     
         public DateTime CurrentTime { get; set; }
+
+        public string Location { get; set; }
     
     }
 }

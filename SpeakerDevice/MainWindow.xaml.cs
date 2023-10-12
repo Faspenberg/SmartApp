@@ -83,14 +83,15 @@ namespace SpeakerDevice
                     var dataModel = new SpeakerDataModel()
                     {
                         IsActive = true,
-                        Volume = "High",
+                        Volume = "Medium",
+                        Location = "LivingRoom",
                         CurrentTime = DateTime.Now
                     };
 
 
                     var latestMessageJson = JsonConvert.SerializeObject(new
                     {
-                        HasPaper = dataModel.Volume,
+                        Volume = dataModel.Volume,
                         CurrentTime = dataModel.CurrentTime,
                         DeviceOn = dataModel.IsActive,
                         ContainerName = dataModel.ContainerName,

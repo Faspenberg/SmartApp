@@ -89,10 +89,6 @@ namespace LampDevice
             }
 
         }
-
-
-
-
         protected override async void OnStartup(StartupEventArgs e)
         {
             await AppHost!.StartAsync();

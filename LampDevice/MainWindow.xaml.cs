@@ -79,25 +79,35 @@ namespace LampDevice
                 {
                     var dataModel = new LampDataModel()
                     {
-                        IsActive = true,
+                        IsActive = true,                        
+                        Location = "Bedroom",
                         CurrentTime = DateTime.Now
                     };
 
-
-                    var latestMessageJson = JsonConvert.SerializeObject(new
+                    var telemetryDataJson = JsonConvert.SerializeObject(new
                     {
-                        CurrentTime = dataModel.CurrentTime,
                         DeviceOn = dataModel.IsActive,
+                        Location = dataModel.Location,
+                        CurrentTime = dataModel.CurrentTime,
                         ContainerName = dataModel.ContainerName,
                     });
 
+                    var latestMessageJson = JsonConvert.SerializeObject(new
+                    {
+                        IsActive = dataModel.IsActive,
+                        CurrentTime = dataModel.CurrentTime,
+                    });
 
                     var operationalStatusJson = JsonConvert.SerializeObject(dataModel.IsActive);
 
+                    var locationString = dataModel.Location;
 
-                    if (await _deviceManager.SendMessageAsync(latestMessageJson) &&
-                        await _deviceManager.SendOperationalStatusAsync(operationalStatusJson))
-                        CurrentMessageSent.Text = $"Message sent successfully: {latestMessageJson} DeviceOn: {operationalStatusJson}";
+
+                    if (await _deviceManager.SendLatestMessageAsync(latestMessageJson) &&
+                        await _deviceManager.SendOperationalStatusAsync(operationalStatusJson) &&
+                        await _deviceManager.SendLocationAsync(locationString) &&
+                        await _deviceManager.SendDataToCosmosDbAsync(telemetryDataJson))
+                        CurrentMessageSent.Text = $"Message sent successfully: {latestMessageJson}, DeviceOn: {operationalStatusJson}, Location: {locationString}";
 
 
                     var telemetryInterval = _deviceManager.Configuration.TelemetryInterval;

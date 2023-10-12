@@ -13,7 +13,7 @@ namespace Shared.Services
     public class WeatherService
     {
         private readonly string _outsideUrl = "https://api.openweathermap.org/data/2.5/weather?lat=59.325&lon=18.05&appid=139cfff42c01e754ed06e2fcf2b44031";
-        private readonly string _insideUrl = "http://localhost:7054/api/GetLatestInsideTemperature";
+        private readonly string _insideUrl = "http://localhost:7093/api/GetLatestInsideTemperature";
         private readonly System.Timers.Timer _timer;
         private readonly HttpClient _http;
 

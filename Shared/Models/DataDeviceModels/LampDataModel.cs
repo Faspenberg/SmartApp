@@ -14,5 +14,6 @@ namespace Shared.Models.DataDeviceModels
 
         public DateTime CurrentTime { get; set; }
 
+        public string Location { get; set; }
     }
 }

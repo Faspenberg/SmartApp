@@ -16,13 +16,15 @@ namespace SmartApp.MVVM.ViewModels
         public DeviceItemViewModel(DeviceItem deviceItem)
         {
             _deviceItem = deviceItem;
-            IsActive = deviceItem.IsActive;
+            IsActive = deviceItem.IsActive;           
             Icon = SetIcon();
         }
 
-        public string DeviceId => _deviceItem.DeviceId;
+        public string DeviceId => _deviceItem.DeviceId ?? "";
 
-        public string DeviceType => _deviceItem.DeviceType;
+        public string DeviceType => _deviceItem.DeviceType ?? "";
+
+        public string Location => _deviceItem.Location ?? "";
 
         [ObservableProperty]
         bool isActive;

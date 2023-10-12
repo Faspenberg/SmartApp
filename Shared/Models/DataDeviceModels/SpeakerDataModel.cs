@@ -16,5 +16,7 @@ namespace Shared.Models.DataDeviceModels
         public string? Volume { get; set; }
 
         public DateTime CurrentTime { get; set; }
+
+        public string Location { get; set; }
     }
 }

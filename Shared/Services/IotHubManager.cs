@@ -184,7 +184,7 @@ namespace Shared.Services
             return null!;
         }
 
-        
+
         public async Task<bool> RegisterDevice(string deviceId, string deviceType, string location)
         {
 
@@ -200,6 +200,7 @@ namespace Shared.Services
 
                 var twinCollection = new TwinCollection();
                 twinCollection["deviceType"] = $"{deviceType}";
+                twinCollection["location"] = $"{location}";
                 await deviceClient.UpdateReportedPropertiesAsync(twinCollection);
 
                 return true;
@@ -210,6 +211,7 @@ namespace Shared.Services
 
             return false;
         }
+
 
         public async Task RemoveDevice(string deviceId)
         {
