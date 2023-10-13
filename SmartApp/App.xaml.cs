@@ -23,6 +23,11 @@ namespace SmartApp
     {
 
         private static IHost? AppHost { get; set; }
+        private string iothub;
+        private string eventhub;
+        private string eventhubname;
+        private string consumergroup;
+
 
         public App()
         {
@@ -33,13 +38,13 @@ namespace SmartApp
                 })
                 .ConfigureServices((config, services) =>
                 {
-                    services.AddSingleton(new IotHubManager(new IotHubManagerOptions
-                    {
-                        IotHubConnectionString = config.Configuration.GetConnectionString("IotHub")!,
-                        EventHubEndpoint = config.Configuration.GetConnectionString("EventHubEndpoint")!,
-                        EventHubName = config.Configuration.GetConnectionString("EventHubName")!,
-                        ConsumerGroup = config.Configuration.GetConnectionString("ConsumerGroup")!
-                    }));
+
+                    iothub = config.Configuration.GetConnectionString("IotHub")!;
+                    eventhub = config.Configuration.GetConnectionString("EventHubEndpoint")!;
+                    eventhubname = config.Configuration.GetConnectionString("EventHubName")!;
+                    consumergroup = config.Configuration.GetConnectionString("ConsumerGroup")!;
+
+                    services.AddSingleton(new IotHubManager());
 
                     services.AddTransient<HttpClient>();
                     services.AddSingleton<DateAndTimeService>();
@@ -59,6 +64,15 @@ namespace SmartApp
             await AppHost!.StartAsync();
 
             var mainWindow = AppHost!.Services.GetRequiredService<MainWindow>();
+            var iotHubManager = AppHost!.Services.GetRequiredService<IotHubManager>();
+            iotHubManager.Initialize(new IotHubManagerOptions
+            {
+                IotHubConnectionString = iothub,
+                EventHubEndpoint = eventhub,
+                EventHubName = eventhubname,
+                ConsumerGroup = consumergroup,
+            });
+
             mainWindow.Show();
             
 

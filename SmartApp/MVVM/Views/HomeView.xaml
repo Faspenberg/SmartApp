@@ -64,7 +64,10 @@
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <controls:DeviceTileControl />
+                        <Button Style="{StaticResource DeviceTile}" Content="Start/Stop" 
+                                Command="{Binding DataContext.StartStopButtonCommand, RelativeSource={RelativeSource AncestorType={x:Type viewmodels:HomeViewModel}}}" 
+                                CommandParameter="{Binding}" 
+                                DataContext="{Binding}" />
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>

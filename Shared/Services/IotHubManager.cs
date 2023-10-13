@@ -19,30 +19,31 @@ namespace Shared.Services
 {
     public class IotHubManager
     {
-        private RegistryManager _registryManager;
-        private ServiceClient _serviceClient;
-        private EventHubConsumerClient _consumerClient;
-        private DeviceClient deviceClient = null!;
-        private readonly System.Timers.Timer _timer;
+        private RegistryManager? _registryManager;
+        private ServiceClient? _serviceClient;
+        private EventHubConsumerClient? _consumerClient;
+        private DeviceClient? deviceClient;
+        private System.Timers.Timer? _timer;
 
         public event Action? DevicesUpdated;
         public List<DeviceItem>? CurrentDevices { get; private set; }
 
-        public IotHubManager(IotHubManagerOptions options)
-        {
 
+        public void Initialize(IotHubManagerOptions options)
+        {
             _registryManager = RegistryManager.CreateFromConnectionString(options.IotHubConnectionString);
             _serviceClient = ServiceClient.CreateFromConnectionString(options.IotHubConnectionString);
             _consumerClient = new EventHubConsumerClient(options.ConsumerGroup, options.EventHubEndpoint);
-
 
             CurrentDevices = new List<DeviceItem>();
 
             _timer = new System.Timers.Timer(5000);
             _timer.Elapsed += async (s, e) => await GetAllDevicesAsync();
             _timer.Start();
-
         }
+
+
+      
 
         public async Task GetAllDevicesAsync()
         {

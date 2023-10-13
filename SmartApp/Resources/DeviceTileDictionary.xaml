@@ -2,7 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:viewModels="clr-namespace:SmartApp.MVVM.ViewModels">
 
-
     <Style x:Key="DeviceTile" TargetType="Button">
         <Setter Property="Background" Value="#3f3f40"></Setter>
         <Setter Property="BorderThickness" Value="0"></Setter>
@@ -17,6 +16,7 @@
             </Setter.Value>
         </Setter>
 
+
         <Setter Property="DataContext" Value="{Binding}" />
 
 
@@ -29,7 +29,7 @@
                                 <DataTemplate DataType="{x:Type viewModels:DeviceItemViewModel}">
                                     <Grid>
                                         <StackPanel>
-                                            <TextBlock Text="{Binding Icon, FallbackValue=&#xe55d;}" FontFamily="{StaticResource FontAwesome-Solid}"  FontSize="80" Foreground="#ffffff" Margin="0 0 0 20"/>
+                                            <TextBlock Text="{Binding Icon, FallbackValue=&#xf2db;}" FontFamily="{StaticResource FontAwesome-Solid}"  FontSize="80" Foreground="#ffffff" Margin="0 0 0 20"/>
                                             <TextBlock Text="{Binding DeviceId, FallbackValue=Unknown}" HorizontalAlignment="Center" Foreground="#cccccc"/>
                                             <TextBlock Text="{Binding Location, FallbackValue=Unknown}" HorizontalAlignment="Center" Foreground="#cccccc" Margin="0 15 0 0"/>
                                         </StackPanel>

@@ -42,12 +42,16 @@ namespace SmartApp.MVVM.ViewModels
 
         private void UpdateDeviceList()
         {
-            var devices = _ioutHubManager.CurrentDevices.Select(device => new DeviceItemViewModel(device)).ToList();
-            DevicesList = new ObservableCollection<DeviceItemViewModel>(devices);
+            try
+            {
+                var devices = _ioutHubManager.CurrentDevices.Select(device => new DeviceItemViewModel(device)).ToList();
+                DevicesList = new ObservableCollection<DeviceItemViewModel>(devices);
+            } catch (Exception ex) { Debug.WriteLine(ex.Message); }
+
         }
 
         [ObservableProperty]
-        ObservableCollection<DeviceItemViewModel> devicesList;
+        ObservableCollection<DeviceItemViewModel> devicesList = new ObservableCollection<DeviceItemViewModel>();
 
         [ObservableProperty]
         private string? _title = "Home";

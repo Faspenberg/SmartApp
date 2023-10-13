@@ -7,5 +7,8 @@
              xmlns:viewmodels="clr-namespace:SmartApp.MVVM.ViewModels"
              mc:Ignorable="d" 
              >
-    <Button Content="Invoke Method" Command="{Binding SendMethodCommand}" Style="{StaticResource DeviceTile}" />
+    <Button Style="{StaticResource DeviceTile}" Content="Start/Stop" 
+        Command="{Binding DataContext.StartStopButtonCommand, RelativeSource={RelativeSource AncestorType={x:Type viewmodels:HomeViewModel}}}" 
+        CommandParameter="{Binding}" 
+        DataContext="{Binding}" />
 </UserControl>

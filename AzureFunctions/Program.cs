@@ -6,12 +6,10 @@ using Microsoft.Extensions.Hosting;
 
 var host = new HostBuilder()
     .ConfigureFunctionsWorkerDefaults()
-    .ConfigureServices((config, services) => 
+    .ConfigureServices((config, services) =>
     {
-        services.AddDbContext<CosmosContext>(x => x.UseCosmos(config.Configuration.GetConnectionString("CosmosDb")!, "KYH"));
-
+        services.AddDbContext<CosmosContext>(x => x.UseCosmos(config.Configuration.GetConnectionString("CosmosDb")!, "kyh"));
     })
-    
     .Build();
 
 host.Run();
