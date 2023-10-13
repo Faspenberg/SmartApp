@@ -47,7 +47,7 @@ namespace SmartApp.MVVM.ViewModels
                     return "\uf6a9";
 
                 default:
-                    return "\uf2db";
+                    return "\ue55d";
             }
 
         }

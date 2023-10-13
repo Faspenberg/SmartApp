@@ -7,5 +7,5 @@
              xmlns:viewmodels="clr-namespace:SmartApp.MVVM.ViewModels"
              mc:Ignorable="d" 
              >
-    <Button Style="{StaticResource DeviceTile}" />
+    <Button Content="Invoke Method" Command="{Binding SendMethodCommand}" Style="{StaticResource DeviceTile}" />
 </UserControl>

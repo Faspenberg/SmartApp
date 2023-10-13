@@ -18,21 +18,11 @@ namespace SpeakerDevice
 {
     public partial class App : Application
     {
-        public IHost? AppHost { get; set; }
-
-
+        public static IHost? host { get; set; }
 
         public App()
         {
-            InitializeApp().GetAwaiter().GetResult();
-        }
-
-
-        private async Task InitializeApp()
-        {
-            await DeviceRegistrationSetup();
-
-            AppHost = Host.CreateDefaultBuilder()
+            host = Host.CreateDefaultBuilder()
                 .ConfigureAppConfiguration((context, config) =>
                 {
                     config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
@@ -40,65 +30,23 @@ namespace SpeakerDevice
                 .ConfigureServices((config, services) =>
                 {
                     services.AddSingleton<MainWindow>();
-                    services.AddSingleton(new DeviceConfiguration(config.Configuration.GetConnectionString("PrinterDevice")!));
-                    services.AddTransient<DeviceManager>();
+                    services.AddSingleton(new DeviceConfiguration(config.Configuration.GetConnectionString("SpeakerDevice")!));
+                    services.AddSingleton<DeviceManager>();
                     services.AddSingleton<NetworkManager>();
                 })
                 .Build();
         }
 
-        private async Task DeviceRegistrationSetup()
-        {
-
-            var connectionString = string.Empty;
-            try
-            {
-                var configurationBuilder = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddEnvironmentVariables();
-
-
-                var root = configurationBuilder.Build();
-                connectionString = root.GetConnectionString("SpeakerDevice");
-            }
-            catch (Exception e) { }
-
-
-            if (string.IsNullOrEmpty(connectionString))
-            {
-                var newDeviceId = "SpeakerDevice";
-                var deviceType = "Speaker";
-
-                var registrationManager = new RegistrationManager();
-                connectionString = await registrationManager.RegisterDevice(newDeviceId, deviceType);
-
-                var newConfig = new JObject(
-                    new JProperty("ConnectionStrings", new JObject(
-                        new JProperty("SpeakerDevice", connectionString)
-                    ))
-                );
-
-
-                var appSettingsPath = "../../../appsettings.json";
-                File.WriteAllText(appSettingsPath, newConfig.ToString(Formatting.Indented));
-                File.WriteAllText("appsettings.json", newConfig.ToString(Formatting.Indented));
-
-
-            }
-
-        }
-
         protected override async void OnStartup(StartupEventArgs e)
         {
-            await AppHost!.StartAsync();
+            await host!.StartAsync();
 
-            var mainWindow = AppHost.Services.GetRequiredService<MainWindow>();
+            var mainWindow = host.Services.GetRequiredService<MainWindow>();
+
             mainWindow.Show();
 
             base.OnStartup(e);
         }
-
-
     }
 
 }

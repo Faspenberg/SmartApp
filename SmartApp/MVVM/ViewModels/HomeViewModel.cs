@@ -111,7 +111,7 @@ namespace SmartApp.MVVM.ViewModels
                     {
                         var deviceId = device.DeviceId;
 
-                        // Stop the device
+                       
                         if (!string.IsNullOrEmpty(deviceId))
                         {
                             await _ioutHubManager.SendMethodAsync(new DirectMethodResponse
@@ -123,7 +123,7 @@ namespace SmartApp.MVVM.ViewModels
                     }
                     else
                     {
-                        // Start the device
+                       
                         var deviceId = device.DeviceId;
                         if (!string.IsNullOrEmpty(deviceId))
                         {

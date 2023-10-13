@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Azure.Devices.Client;
+using Microsoft.Azure.Devices.Shared;
+using Newtonsoft.Json;
 using Shared.Models.DataDeviceModels;
 using Shared.Services;
 using System;
@@ -27,11 +29,11 @@ namespace SpeakerDevice
             InitializeComponent();
             _deviceManager = deviceManager;
             Task.WhenAll(SetDeviceTypeAsync(), SendTelemetryDataAsync(), CheckConnectivityAsync(),
-                TogglePrinterStateAsync());
+                ToggleSpeakerStateAsync());
         }
 
 
-        private async Task TogglePrinterStateAsync()
+        private async Task ToggleSpeakerStateAsync()
         {
 
             while (true)
@@ -73,6 +75,7 @@ namespace SpeakerDevice
 
 
 
+
         private async Task SendTelemetryDataAsync()
         {
 
@@ -91,9 +94,10 @@ namespace SpeakerDevice
 
                     var latestMessageJson = JsonConvert.SerializeObject(new
                     {
+                        DeviceOn = dataModel.IsActive,
                         Volume = dataModel.Volume,
                         CurrentTime = dataModel.CurrentTime,
-                        DeviceOn = dataModel.IsActive,
+                        IsActive = dataModel.IsActive,
                         ContainerName = dataModel.ContainerName,
                     });
 
@@ -111,8 +115,8 @@ namespace SpeakerDevice
                     await Task.Delay(telemetryInterval);
                 }
             }
-
-
         }
+
+     
     }
 }

@@ -16,5 +16,7 @@ namespace Shared.Models
         public string? Message { get; set; }
 
         public object? Payload { get; set; }
+
+        public int ResponseTimeout { get; set; } = 20;
     }
 }

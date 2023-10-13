@@ -161,7 +161,7 @@ namespace Shared.Services
             {
                 var cloudMethod = new CloudToDeviceMethod(req.MethodName)
                 {
-                    //ConnectionTimeout = new TimeSpan(req)
+                    ConnectionTimeout = new TimeSpan(req.ResponseTimeout)
                 };
 
 

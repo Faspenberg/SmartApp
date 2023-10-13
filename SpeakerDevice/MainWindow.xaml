@@ -15,6 +15,7 @@
             <TextBlock x:Name="SpeakerOffIcon" FontFamily="{StaticResource FontAwesome-Solid}" Text="&#xf6a9;" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="80" Margin="0 -14 0 0" Visibility="Collapsed">
 
             </TextBlock>
+            
         </Grid>
 
         <TextBlock x:Name="CurrentMessageSent"  HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="20" />
