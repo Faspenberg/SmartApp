@@ -3,7 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34009.444
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartApp", "SmartApp\SmartApp.csproj", "{82962F34-FC7A-4BDB-BF47-561764A04887}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartApp", "SmartApp\SmartApp.csproj", "{82962F34-FC7A-4BDB-BF47-561764A04887}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureFunctions", "AzureFunctions\AzureFunctions.csproj", "{A5CB438A-0101-44B3-BD54-67D4BAB85B62}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Device.Fan", "Device.Fan\Device.Fan.csproj", "{A0487981-0B8B-4A4C-BBB0-C056E6CD1141}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Shared\Shared.csproj", "{8EC064F2-A970-4418-8113-4A7394B5DA51}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LampDevice", "LampDevice\LampDevice.csproj", "{18BC36EF-FB7F-4A4E-84A4-2442F444BC9F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpeakerDevice", "SpeakerDevice\SpeakerDevice.csproj", "{2D83F305-B6E0-498F-BBE8-01302F315BFF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +25,26 @@ Global
 		{82962F34-FC7A-4BDB-BF47-561764A04887}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{82962F34-FC7A-4BDB-BF47-561764A04887}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{82962F34-FC7A-4BDB-BF47-561764A04887}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5CB438A-0101-44B3-BD54-67D4BAB85B62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5CB438A-0101-44B3-BD54-67D4BAB85B62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5CB438A-0101-44B3-BD54-67D4BAB85B62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5CB438A-0101-44B3-BD54-67D4BAB85B62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0487981-0B8B-4A4C-BBB0-C056E6CD1141}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0487981-0B8B-4A4C-BBB0-C056E6CD1141}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0487981-0B8B-4A4C-BBB0-C056E6CD1141}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0487981-0B8B-4A4C-BBB0-C056E6CD1141}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EC064F2-A970-4418-8113-4A7394B5DA51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EC064F2-A970-4418-8113-4A7394B5DA51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EC064F2-A970-4418-8113-4A7394B5DA51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EC064F2-A970-4418-8113-4A7394B5DA51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18BC36EF-FB7F-4A4E-84A4-2442F444BC9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18BC36EF-FB7F-4A4E-84A4-2442F444BC9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18BC36EF-FB7F-4A4E-84A4-2442F444BC9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18BC36EF-FB7F-4A4E-84A4-2442F444BC9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D83F305-B6E0-498F-BBE8-01302F315BFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D83F305-B6E0-498F-BBE8-01302F315BFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D83F305-B6E0-498F-BBE8-01302F315BFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D83F305-B6E0-498F-BBE8-01302F315BFF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
