@@ -9,6 +9,6 @@
              >
     <Button Style="{StaticResource DeviceTile}" Content="Start/Stop" 
         Command="{Binding DataContext.StartStopButtonCommand, RelativeSource={RelativeSource AncestorType={x:Type viewmodels:HomeViewModel}}}" 
-        CommandParameter="{Binding}" 
+        CommandParameter="{Binding }" 
         DataContext="{Binding}" />
 </UserControl>

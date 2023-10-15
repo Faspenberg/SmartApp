@@ -1,4 +1,5 @@
 ﻿using SmartApp.MVVM.ViewModels;
+using SmartApp.MVVM.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,10 +20,13 @@ namespace SmartApp
     
     public partial class MainWindow : Window
     {
+
+       
         public MainWindow(MainWindowViewModel mainWindowViewModel)
         {
             InitializeComponent();
             DataContext = mainWindowViewModel;
+            
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)

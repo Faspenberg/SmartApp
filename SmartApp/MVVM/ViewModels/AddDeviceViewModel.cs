@@ -68,4 +68,4 @@ namespace SmartApp.MVVM.ViewModels
         }
 
     }
-    }
+}

@@ -27,14 +27,49 @@ namespace SmartApp.MVVM.Controls
 
     public partial class DeviceTileControl : UserControl
     {
+        private readonly IotHubManager _iotHubManager;
 
-        public DeviceTileControl()
+
+
+        public DeviceTileControl(IServiceProvider serviceProvider)
         {
             InitializeComponent();
         }
 
 
-        
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            var deviceItem = button!.DataContext as DeviceItemViewModel;
+
+            if (deviceItem != null)
+            {
+                if (deviceItem.IsActive)
+                {
+                    var directMethodResponse = new DirectMethodResponse()
+                    {
+                        DeviceId = deviceItem.DeviceId!,
+                        MethodName = "stop"
+                    };
+
+                    await _iotHubManager.SendMethodAsync(directMethodResponse);
+                }
+
+                if (!deviceItem.IsActive)
+                {
+                    var directMethodResponse = new DirectMethodResponse()
+                    {
+                        DeviceId = deviceItem.DeviceId!,
+                        MethodName = "start"
+                    };
+
+                    await _iotHubManager.SendMethodAsync(directMethodResponse);
+                }
+            }
+
+
+        }
+
 
     }
 }
