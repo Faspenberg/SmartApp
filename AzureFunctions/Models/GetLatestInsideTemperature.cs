@@ -16,7 +16,7 @@ namespace AzureFunctions.Models
         {
             _logger = loggerFactory.CreateLogger<GetLatestInsideTemperature>();
 
-            _cosmosClient = new CosmosClient("AccountEndpoint=https://kyh-smartunitcosmosdb.documents.azure.com:443/;AccountKey=ImCYA5pgXRqg6qSGDu7bkaOn3HRrrlp6nfeyyzDfYizs45y6Esi19ZSbYqGETqXWrnLIiswGjaRHACDbWY58pw==;");
+            _cosmosClient = new CosmosClient("AccountEndpoint=https://kyh-cosmosdb.documents.azure.com:443/;AccountKey=YeQ4BkqrBCs7Qggp7CmuVr4QFZMsmjqMwPzjHYOZ8jZXRn5Ve5Gz7WeUaV7kFhf9lurB9U2osjh8ACDbGlJlrA==;");
             var database = _cosmosClient.GetDatabase("kyh");
             _container = database.GetContainer("messages");
         }
