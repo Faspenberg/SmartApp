@@ -19,7 +19,7 @@
 
         <Grid Grid.Row="0">
 
-            <TextBlock FontFamily="{StaticResource FontAwesome-Regular}" FontSize="120" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <TextBlock FontFamily="{StaticResource FontAwesome-Solid}" FontSize="120" HorizontalAlignment="Center" VerticalAlignment="Center" />
             <Ellipse Height="80" Width="80" Margin="2 -12 0 0"  Fill="White"/>
             <TextBlock RenderTransformOrigin="0.5 0.5" FontFamily="{StaticResource FontAwesome-Solid}" Text="&#xf863;" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="80" Margin="0 -14 0 0">
                 <TextBlock.RenderTransform>
