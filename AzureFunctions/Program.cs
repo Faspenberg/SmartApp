@@ -8,7 +8,7 @@ var host = new HostBuilder()
     .ConfigureFunctionsWorkerDefaults()
     .ConfigureServices((config, services) =>
     {
-        services.AddSingleton(new IotHubManager(config.Configuration.GetConnectionString("IotHub")));
+        services.AddDbContext<CosmosContext>(x => x.UseCosmos(config.Configuration.GetConnectionString("CosmosDb")!, "kyh"));
     })
     .Build();
 

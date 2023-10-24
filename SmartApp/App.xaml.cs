@@ -1,18 +1,20 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Shared.Models;
-using Shared.Services;
-using SmartApp.MVVM.ViewModels;
+﻿using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
-using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Shared.Contexts;
+using Shared.Models;
+using Shared.Models.Entities;
+using Shared.Services;
+using SmartApp.MVVM.ViewModels;
 
 namespace SmartApp
 {
@@ -32,32 +34,57 @@ namespace SmartApp
         public App()
         {
             AppHost = Host.CreateDefaultBuilder()
-                .ConfigureAppConfiguration((config) =>
+                .ConfigureAppConfiguration((context, config) =>
                 {
-                    config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+                    config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
                 })
-                .ConfigureServices((config, services) =>
-                {
+               .ConfigureServices((config, services) =>
+               {
+                   services.AddTransient<HttpClient>();
+                   services.AddDbContext<SmartAppDbContext>((provider, options) =>
+                   {
+                       options.UseSqlite($"DataSource=Database.sqlite.db", x => x.MigrationsAssembly(nameof(Shared)));
+                   }, ServiceLifetime.Scoped);
 
-                    iothub = config.Configuration.GetConnectionString("IotHub")!;
-                    eventhub = config.Configuration.GetConnectionString("EventHubEndpoint")!;
-                    eventhubname = config.Configuration.GetConnectionString("EventHubName")!;
-                    consumergroup = config.Configuration.GetConnectionString("ConsumerGroup")!;
 
-                    services.AddSingleton(new IotHubManager());
+                   using (var scope = services.BuildServiceProvider().CreateScope())
+                   {
+                       var dbContext = scope.ServiceProvider.GetRequiredService<SmartAppDbContext>();
 
-                    services.AddTransient<HttpClient>();
-                    services.AddSingleton<DateAndTimeService>();
-                    services.AddSingleton<WeatherService>();
-                    services.AddSingleton<HomeViewModel>();
-                    services.AddSingleton<SettingsViewModel>();
-                    services.AddSingleton<AddDeviceViewModel>();
-                    services.AddSingleton<DevicesViewModel>();
-                    services.AddSingleton<MainWindowViewModel>();
-                    services.AddSingleton<MainWindow>();
-                })
+                       if (!dbContext.DatabaseExists())
+                           dbContext.Database.Migrate();
+
+                       if (!dbContext.ConnectionStringsExists())
+                       {
+                           dbContext.Settings.Add(new SmartAppSettings
+                           {
+                               Id = 1,
+                               IotHubConnectionString = config.Configuration.GetConnectionString("IotHub")!,
+                               EventHubEndpoint = config.Configuration.GetConnectionString("EventHubEndpoint")!,
+                               EventHubName = config.Configuration.GetConnectionString("EventHubName")!,
+                               ConsumerGroup = config.Configuration.GetConnectionString("ConsumerGroup")!
+                           });
+
+                           dbContext.SaveChanges();
+                       }
+                   }
+
+                   services.AddSingleton<IotHubManager>();
+                   services.AddSingleton<SmartAppDbService>();
+                   services.AddSingleton<DateAndTimeService>();
+                   services.AddSingleton<WeatherService>();
+                   services.AddSingleton<HomeViewModel>();
+                   services.AddSingleton<SettingsViewModel>();
+                   services.AddSingleton<AddDeviceViewModel>();
+                   services.AddSingleton<DevicesViewModel>();
+                   services.AddSingleton<SetupViewModel>();
+                   services.AddSingleton<MainWindowViewModel>();
+                   services.AddSingleton<MainWindow>();
+               })
                 .Build();
+
         }
+
 
         protected override async void OnStartup(StartupEventArgs e)
         {

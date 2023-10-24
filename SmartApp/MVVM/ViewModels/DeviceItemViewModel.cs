@@ -16,7 +16,7 @@ namespace SmartApp.MVVM.ViewModels
         public DeviceItemViewModel(DeviceItem deviceItem)
         {
             _deviceItem = deviceItem;
-            IsActive = deviceItem.IsActive;           
+            IsActive = deviceItem.IsActive;            
             Icon = SetIcon();
         }
 
@@ -32,12 +32,18 @@ namespace SmartApp.MVVM.ViewModels
         [ObservableProperty]
         string icon;
 
+        public void Initialize()
+        {
+            SetIcon();
+        }
+
 
         private string SetIcon()
         {
             switch (DeviceType?.ToLower())
             {
                 case "lamp":
+                    
                     return "\uf0eb";
 
                 case "fan":
